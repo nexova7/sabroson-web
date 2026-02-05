@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabroson | Mi Espacio</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo-link">
+                <img src="assets/images/logo-sabroson.jpg" alt="Sabroson Logo" class="main-logo">
+                <span class="logo-text">SabroSon</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 0.9rem; font-weight: bold;">Hola, Cliente</span>
+                <a href="index.html" class="nav-link" style="padding: 5px 15px; font-size: 0.8rem;">Salir</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section container">
+        <h1 class="text-center mb-2">Tu Espacio Artesanal</h1>
+
+        <div class="products-grid">
+            <!-- Status Card -->
+            <div class="card-perspective">
+                <div class="card-3d" id="cupos-card">
+                    <h3 id="cupos-title">Consultando cocina...</h3>
+                    <div class="cupos-status mb-1" id="cupos-status-container">
+                        <i class="fas fa-circle fa-3x" style="color: #ccc; margin-bottom: 10px;" id="cupos-icon"></i>
+                        <p id="cupos-body" style="font-size: 0.95rem; margin-bottom: 1rem;">Estamos verificando los
+                            cupos disponibles de hoy.</p>
+                    </div>
+                    <a href="#" class="btn" id="cupos-btn" style="width: 100%; text-align: center;">Consultar
+                        WhatsApp</a>
+
+                    <p id="fixed-text"
+                        style="font-size: 0.85rem; margin-top: 1.5rem; color: var(--color-accent-wood); font-style: italic; border-top: 1px solid #eee; padding-top: 10px; text-align: center;">
+                        🌾 Aquí todo se hace despacio, con amor y con manos reales. Por eso cuidamos nuestros cupos,
+                        para entregarte algo que sepa a hogar.
+                    </p>
+                </div>
+            </div>
+
+            <!-- News / Blog -->
+            <div class="card-perspective">
+                <div class="card-3d">
+                    <h3>📰 Novedades</h3>
+                    <ul class="mb-1" id="novedades-lista">
+                        <li style="margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                            Cargando novedades semanales...
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Preferences -->
+            <div class="card-perspective">
+                <div class="card-3d">
+                    <h3>⚙️ Mis Preferencias</h3>
+                    <form>
+                        <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px;">
+                            <input type="checkbox" id="pref1" checked>
+                            <label for="pref1">Recibir recordatorios de cupos por WhatsApp</label>
+                        </div>
+                        <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px;">
+                            <input type="checkbox" id="pref2" checked>
+                            <label for="pref2">Boletín de recetas mensuales</label>
+                        </div>
+                        <button class="btn-secondary" style="width: 100%;">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content"
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h3 style="color: white;">Sabroson 🍞</h3>
+                <p>Hecho con amor en Soacha.</p>
+            </div>
+            <div style="text-align: right;">
+                <p>© 2026 Sabroson.</p>
+                <p style="font-size: 0.85rem; opacity: 0.8;">Diseñado por: <strong>Nexova +57 302 722 1223</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>

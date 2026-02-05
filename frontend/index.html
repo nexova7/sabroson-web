@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Sabroson - Alimentos artesanales hechos con amor. Tortas, panes y avena casera en Soacha.">
+    <title>Sabroson | Alimentos Artesanales</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo-link">
+                <img src="assets/images/logo-sabroson.jpg" alt="Sabroson Logo" class="main-logo">
+                <span class="logo-text">SabroSon</span>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link">Inicio</a></li>
+                    <li><a href="#productos" class="nav-link">Menú</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="#pedido" class="nav-link"><i class="fas fa-shopping-basket"></i> Mi Pedido <span
+                                id="cart-count">0</span></a></li>
+                    <li><a href="login.html" class="nav-link">Área Privada</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="luminous-gradient"></div>
+        <div class="hero-container">
+            <!-- Carrusel a la izquierda -->
+            <div class="hero-image-wrapper">
+                <div class="carousel">
+                    <img src="productos/tortas/tortas frias/torta-fria/1-torta-helada-frutos-rojos.png"
+                        alt="Torta Helada" class="carousel-slide active">
+                    <img src="productos/tortas/tortas en general/3 Torta de frutos rojos clásicos (fresas y moras).png"
+                        alt="Frutos Rojos" class="carousel-slide">
+                    <img src="productos/tortas/budin de chocolate/1.png" alt="Budín" class="carousel-slide">
+                    <img src="productos/tortas/budin zanahoria/3.png" alt="Zanahoria" class="carousel-slide">
+                </div>
+            </div>
+
+            <!-- Slogan y Botón a la derecha -->
+            <div class="hero-content" style="text-align: left;">
+                <h1 style="font-size: 3.8rem; line-height: 1.1;">Pastelería y Panadería <br><span
+                        style="color: var(--color-accent-wood);">Artesanal</span></h1>
+                <p style="font-size: 1.25rem; margin-top: 1rem; color: #5D4037;">Elaboramos cada pieza con tiempo, manos
+                    reales y el amor de lo hecho en casa. Sin químicos, solo tradición.</p>
+                <div style="margin-top: 2.5rem;">
+                    <a href="#productos" class="btn" style="padding: 1.2rem 2.5rem; font-size: 1.1rem;">🥐 Explorar el
+                        Menú</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="productos" class="section">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <h2>🥧 Menú de la Casa</h2>
+                <p>Elige tu favorito.</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- Budín Chocolate -->
+                <div class="card-perspective">
+                    <div class="card-3d">
+                        <img src="productos/tortas/budin de chocolate/1.png" alt="Budín Chocolate" class="card-img">
+                        <h3 class="card-title">Budín Chocolate</h3>
+                        <p class="card-desc">Húmedo e intenso, con cacao profundo y toppings premium que eliges para
+                            hacerlo a tu gusto.</p>
+                        <div style="margin-top: auto;">
+                            <button class="btn whatsapp-btn" data-product="Budín Chocolate">Pedir Ahora</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mantecada -->
+                <div class="card-perspective">
+                    <div class="card-3d">
+                        <img src="productos/tortas/budin mantecada/1.png" alt="Mantecada" class="card-img">
+                        <h3 class="card-title">Mantecada Maíz</h3>
+                        <p class="card-desc">Tradición casera con ese toque sabrosón que encanta, elaborada con maíz
+                            seleccionado.</p>
+                        <div style="margin-top: auto;">
+                            <button class="btn whatsapp-btn" data-product="Mantecada">Pedir Ahora</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Torta Helada -->
+                <div class="card-perspective">
+                    <div class="card-3d">
+                        <img src="productos/tortas/tortas frias/torta-fria/1-torta-helada-frutos-rojos.png" alt="Helada"
+                            class="card-img">
+                        <h3 class="card-title">Torta Helada</h3>
+                        <p class="card-desc">👉 Una explosión de frescura con frutos rojos naturales y helado artesanal,
+                            suave y cremoso.</p>
+                        <div style="margin-top: auto;">
+                            <button class="btn whatsapp-btn" data-product="Torta Helada">Pedir Ahora</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Budín de Naranja -->
+                <div class="card-perspective">
+                    <div class="card-3d">
+                        <img src="productos/tortas/tortas en general/1 naranja.png" alt="Naranja" class="card-img">
+                        <h3 class="card-title">Bizcocho de Naranja</h3>
+                        <p class="card-desc">Aroma cítrico natural, miga suave y esponjosa, bizcocho de naranja decorado
+                            con crema chantilly y un toque de mermelada de naranja.</p>
+                        <div style="margin-top: auto;">
+                            <button class="btn whatsapp-btn" data-product="Budín Naranja">Pedir Ahora</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Torta de Mango -->
+                <div class="card-perspective">
+                    <div class="card-3d">
+                        <img src="productos/tortas/mango/1.png" alt="Mango" class="card-img">
+                        <h3 class="card-title">Torta fria de Mango</h3>
+                        <p class="card-desc">Un dulce sabor tropical con fruta fresca de temporada: bizcocho de
+                            chocolate, helado cremoso de mango, fina capa de gelatina de mango y copos de chantilly de
+                            cacao suave con trozos de Oreo..</p>
+                        <div style="margin-top: auto;">
+                            <button class="btn whatsapp-btn" data-product="Torta Mango">Pedir Ahora</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chocolate y Caramelo -->
+                <div class="card-perspective">
+                    <div class="card-3d">
+                        <img src="productos/tortas/chocolate y caramelo/1.png" alt="Choco Caramelo" class="card-img">
+                        <h3 class="card-title">Choco-Caramelo</h3>
+                        <p class="card-desc">La combinación perfecta de cacao intenso y caramelo artesanal, en una torta
+                            de chocolate con glaseado de chantilly de caramelo.</p>
+                        <div style="margin-top: auto;">
+                            <button class="btn whatsapp-btn" data-product="Torta Choco-Caramelo">Pedir Ahora</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Budín de Zanahoria -->
+                <div class="card-perspective">
+                    <div class="card-3d">
+                        <img src="productos/tortas/budin zanahoria/3.png" alt="Zanahoria" class="card-img">
+                        <h3 class="card-title">Budín de Zanahoria</h3>
+                        <p class="card-desc">Increíblemente húmedo y aromático, con especias naturales, budín de
+                            zanahoria personalizable con el topping que elijas.</p>
+                        <div style="margin-top: auto;">
+                            <button class="btn whatsapp-btn" data-product="Budín Zanahoria">Pedir Ahora</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Torta de Maracuyá -->
+                <div class="card-perspective">
+                    <div class="card-3d">
+                        <img src="productos/tortas/tortas frias/torta-fria/3-torta-maracuya.png" alt="Maracuyá"
+                            class="card-img">
+                        <h3 class="card-title">Torta de Maracuyá</h3>
+                        <p class="card-desc">Una explosión cítrica y fresca: bizcocho frío y húmedo de vainilla, helado
+                            artesanal de maracuyá, mermelada de maracuyá y delicados copos de chantilly.</p>
+                        <div style="margin-top: auto;">
+                            <button class="btn whatsapp-btn" data-product="Torta Maracuyá">Pedir Ahora</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order List Section (DELETED - Moved to Drawer) -->
+
+    <!-- Footer -->
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalProductTitle"></h3>
+            <input type="number" id="quantity" class="form-input" value="1" min="1">
+            <textarea id="notes" class="form-input" rows="2" placeholder="Notas..."></textarea>
+            <button id="confirmOrderBtn" class="btn" style="width: 100%; margin-top: 1rem;">WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- Order Drawer (Side Panel) -->
+    <div id="order-drawer" class="order-drawer">
+        <div class="drawer-overlay" id="drawer-overlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Mi pedido artesanal 🤍</h3>
+                <button class="drawer-close" id="drawer-close">&times;</button>
+            </div>
+
+            <div class="drawer-body">
+                <!-- Empty State -->
+                <div id="cart-empty" class="text-center" style="padding: 2rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🍞</div>
+                    <p style="color: var(--color-accent-wood); font-weight: 700;">Aún no hay productos seleccionados</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Explora nuestro catálogo y elige lo que más te
+                        guste.</p>
+                </div>
+
+                <!-- Cart List -->
+                <div id="cart-content" style="display: none;">
+                    <div id="cart-items">
+                        <!-- Items dinámicos -->
+                    </div>
+
+                    <!-- Discount Section -->
+                    <div class="drawer-discount">
+                        <label>🎟️ Código de beneficio (opcional)</label>
+                        <input type="text" id="discount-code" placeholder="Ingresa tu código" class="form-input">
+                    </div>
+
+                    <!-- Community Link -->
+                    <div class="drawer-community">
+                        <p>🤍 <strong>¿Eres de la comunidad?</strong> Recibe beneficios registrándote.</p>
+                        <a href="registro.html"
+                            style="font-size: 0.85rem; color: var(--color-accent-wood); text-decoration: underline;">Unirme
+                            ahora</a>
+                    </div>
+
+                    <div class="drawer-footer-note">
+                        <p>✨ Productos 100% artesanales. Coordinamos todo por WhatsApp.</p>
+                    </div>
+
+                    <button id="send-cart-whatsapp" class="btn btn-block">
+                        📲 Enviar pedido por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content"
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h3 style="color: white;">Sabroson 🍞</h3>
+                <p>Hecho con amor en Soacha.</p>
+            </div>
+            <div style="text-align: right;">
+                <p>© 2026 Sabroson.</p>
+                <p style="font-size: 0.85rem; opacity: 0.8;">Diseñado por: <strong>Nexova +57 302 722 1223</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

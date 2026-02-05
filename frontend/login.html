@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabroson | Área Privada</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo-link">
+                <img src="assets/images/logo-sabroson.jpg" alt="Sabroson Logo" class="main-logo">
+                <span class="logo-text">SabroSon</span>
+            </a>
+            <nav>
+                <a href="index.html" class="nav-link" style="font-size: 0.9rem;">← Volver al Inicio</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="section container"
+        style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+        <div class="card-perspective" style="width: 100%; max-width: 400px;">
+            <div class="card-3d">
+                <div class="text-center mb-2">
+                    <h2>Bienvenido a Casa</h2>
+                    <p>Accede a beneficios exclusivos y cupos prioridad.</p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">Usuario</label>
+                        <input type="text" class="form-input" required placeholder="Tu nombre de usuario">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-input" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; margin-bottom: 10px;">Entrar</button>
+                    <p class="text-center" style="font-size: 0.9rem;">
+                        ¿No tienes cuenta? <a href="#" id="showRegister"
+                            style="color: var(--color-brown); font-weight: bold;">Regístrate aquí</a>
+                    </p>
+                </form>
+
+                <!-- Register Form (Hidden) -->
+                <form id="registerForm" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Nombre de Usuario</label>
+                        <input type="text" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Repetir Contraseña</label>
+                        <input type="password" class="form-input" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" id="news" style="margin-top: 5px;">
+                        <label for="news" style="font-size: 0.9rem;">Deseo recibir promociones, descuentos y
+                            novedades.</label>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; margin-bottom: 10px;">Crear Cuenta</button>
+                    <p class="text-center" style="font-size: 0.9rem;">
+                        ¿Ya tienes cuenta? <a href="#" id="showLogin"
+                            style="color: var(--color-brown); font-weight: bold;">Ingresa aquí</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content"
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h3 style="color: white;">Sabroson 🍞</h3>
+                <p>Hecho con amor en Soacha.</p>
+            </div>
+            <div style="text-align: right;">
+                <p>© 2026 Sabroson.</p>
+                <p style="font-size: 0.85rem; opacity: 0.8;">Diseñado por: <strong>Nexova +57 302 722 1223</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Toggle Logic
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const showRegister = document.getElementById('showRegister');
+        const showLogin = document.getElementById('showLogin');
+
+        showRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+        });
+
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        // Mock Login/Register Action
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.location.href = 'dashboard.html';
+        });
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('¡Cuenta creada con éxito! Ahora puedes ingresar.');
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+
+</html>
