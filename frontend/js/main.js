@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             drawer.classList.add('active');
             document.body.style.overflow = 'hidden';
             updateCartUI();
+            fetchSemaphoreStatus(); // Actualizar desde Google Sheets al abrir
         }
     }
 
@@ -81,62 +82,51 @@ document.addEventListener('DOMContentLoaded', () => {
         saveCart();
     };
 
-    // --- SEMAPHORE & GOOGLE SHEETS ---
-    const SHEET_ID = '11htctaNcMxrsELB_qTFhvYsAn74x24rp74p-Pr98jkU';
-    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv`;
-    let currentDayStatus = 'VERDE';
+    // --- SEMAPHORE & GOOGLE SHEETS (Dynamic Reading) ---
+    const GVIZ_URL = 'https://docs.google.com/spreadsheets/d/11htctaNcMxrsELB_qTFhvYsAn74x24rp74p-Pr98jkU/gviz/tq?tqx=out:json';
+    let currentDayStatus = 'verde';
 
     async function fetchSemaphoreStatus() {
         try {
-            const now = new Date();
-            const hour = now.getHours();
+            const response = await fetch(GVIZ_URL + '&t=' + new Date().getTime()); // Prevent caching
+            const text = await response.text();
+            const jsonStr = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
+            const json = JSON.parse(jsonStr);
+            const rows = json.table.rows;
 
-            // Automation logic
-            let isClosedByTime = hour < 8 || hour >= 17;
+            // Segunda fila de datos (Index 1)
+            const dataRow = rows[1];
+            if (!dataRow) return;
 
-            const response = await fetch(CSV_URL);
-            if (!response.ok) throw new Error();
-            const data = await response.text();
-            const rows = data.split('\n');
-            const dataRow = rows[1]?.split(',') || [];
+            const cols = dataRow.c;
+            const estado = (cols[0]?.v || 'verde').toLowerCase().trim();
+            const mensaje = cols[1]?.v || '';
 
-            const sheetStatus = (dataRow[0] || '').trim().toUpperCase();
-
-            // AMARILLO has priority
-            if (sheetStatus === 'AMARILLO') {
-                currentDayStatus = 'AMARILLO';
-            } else if (isClosedByTime) {
-                currentDayStatus = 'ROJO';
-            } else {
-                currentDayStatus = sheetStatus || 'VERDE';
-            }
-
-            updateSemaphoreUI();
+            currentDayStatus = estado;
+            updateSemaphoreUI(estado, mensaje);
         } catch (e) {
-            console.error("Error fetching status", e);
+            console.error("Error fetching status from Google Sheets", e);
         }
     }
 
-    function updateSemaphoreUI() {
-        const statuses = {
-            'VERDE': { class: 'status-verde', dot: 'dot-verde', text: 'Estamos recibiendo pedidos con todo el cariño artesanal 💚' },
-            'AMARILLO': { class: 'status-amarillo', dot: 'dot-amarillo', text: 'Estamos en los últimos cupos del día 🟡 Te recomendamos confirmar tu pedido pronto.' },
-            'ROJO': { class: 'status-rojo', dot: 'dot-rojo', text: 'Hoy ya completamos nuestros cupos ❤️ Puedes escribirnos para agendar para el próximo día.' }
-        };
-        const config = statuses[currentDayStatus] || statuses['VERDE'];
-
+    function updateSemaphoreUI(estado, mensaje) {
         const drawerSemaphore = document.getElementById('drawer-semaphore');
         const drText = document.getElementById('drawer-status-text');
+
         if (drawerSemaphore && drText) {
-            drawerSemaphore.className = `semaphore-status ${config.class}`;
+            // Mapping colors to classes
+            const statusClass = `status-${estado}`;
+            const dotClass = `dot-${estado}`;
+
+            drawerSemaphore.className = `semaphore-status ${statusClass}`;
             const dot = drawerSemaphore.querySelector('.status-dot');
-            if (dot) dot.className = `status-dot ${config.dot}`;
-            drText.innerText = config.text;
+            if (dot) dot.className = `status-dot ${dotClass}`;
+
+            // Show message exactly as it comes
+            drText.innerText = mensaje || 'Sin mensaje disponible';
         }
     }
 
-    fetchSemaphoreStatus();
-    setInterval(fetchSemaphoreStatus, 60000);
 
     // --- PRODUCT CLICK HANDLER (AGREGAR DIRECTO) ---
     document.body.addEventListener('click', (e) => {
