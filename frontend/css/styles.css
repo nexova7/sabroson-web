@@ -781,3 +781,94 @@ footer {
     color: #555;
     border-top: 1px solid #F0E6D8;
 }
+
+/* --- RESPONSIVE ADJUSTMENTS & MOBILE MENU --- */
+
+/* Hide menu toggle on desktop */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-accent-wood);
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 2001;
+    transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background: var(--color-bg-base);
+        background-image: var(--texture-paper);
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+        z-index: 2000;
+        padding: 2rem;
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+
+    .nav-link {
+        width: 100%;
+        text-align: center;
+        font-size: 1.2rem;
+        padding: 1rem;
+    }
+
+    /* Hero adjustments */
+    .hero-content h1 {
+        font-size: 2.5rem !important;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem !important;
+    }
+
+    .hero-image-wrapper {
+        height: 280px !important;
+    }
+
+    /* Grid adjustments */
+    .products-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+    }
+
+    .card-img {
+        height: 200px;
+    }
+
+    /* Drawer adjustments for mobile */
+    .drawer-content {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem !important;
+    }
+
+    .main-logo {
+        height: 45px;
+    }
+
+    .logo-text {
+        font-size: 1.4rem;
+    }
+}
