@@ -16,21 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Masticado Texts
     const TEXTS = {
         verde: {
-            title: "🟢 Aún estamos recibiendo pedidos.",
-            body: "Hoy todavía tenemos un espacio en la cocina para preparar algo especial para ti. Todo lo que hacemos es casero, con calma y a mano, como en casa de la abuela. Escríbenos y aparta tu cupito 🍞💛",
-            whatsapp: "Hola Sabroson, vi que tienen cupos. Quiero apartar un pedido para hoy.",
+            title: "🟢 Pedidos abiertos",
+            body: "Estamos recibiendo pedidos con todo el cariño artesanal 💚",
+            btnText: "🥐 Explorar el Menú",
             color: "#2E7D32"
         },
         amarillo: {
-            title: "🟡 Ya casi se llena la agenda.",
-            body: "Nos quedan muy poquitos cupos para hoy. La cocina va tomando ritmo y las manos no dan para más cuando queremos hacerlo bien, sin afanes y con el sabor de siempre. Consúltanos y no te quedes con las ganas ⏳🍰",
-            whatsapp: "Hola Sabroson, vi que quedan pocos cupos. ¿Aún alcanzo a pedir para hoy?",
+            title: "🟡 Cupos limitados",
+            body: "Estamos en los últimos cupos del día 🟡 Te recomendamos confirmar tu pedido pronto.",
+            btnText: "🥐 Ver Cupos Disponibles",
             color: "#FBC02D"
         },
         rojo: {
-            title: "🔴 Por hoy la cocina ya está completa.",
-            body: "Gracias a Dios y a ustedes, hoy ya no tenemos más cupos disponibles. Ya estamos organizando los pedidos para mañana. Nota: Ten presente que los tiempos de entrega varían según tu pedido; te confirmaremos al recibir tu mensaje.",
-            whatsapp: "Hola Sabroson, vi que ya no hay cupos para hoy, pero quiero apartar mi lugar para el próximo día disponible. Entiendo que los tiempos de entrega varían.",
+            title: "🔴 Cupos cerrados",
+            body: "Hoy ya completamos nuestros cupos ❤️ Puedes escribirnos para agendar para el próximo día.",
+            btnText: "🥐 Ver Menú para Mañana",
             color: "#C62828"
         }
     };
@@ -67,8 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
             let newsTitle = dataRow[2] || 'Sin novedades';
             let newsText = dataRow[3] || 'Vuelve pronto para más noticias.';
 
-            // 3. Determinar Estado Final (El horario manda sobre el Excel)
-            let finalStatus = isClosedByTime ? 'rojo' : excelStatus;
+            // 3. Determinar Estado Final (El horario manda sobre el Excel, excepto AMARILLO)
+            let finalStatus = excelStatus;
+
+            if (excelStatus === 'amarillo') {
+                finalStatus = 'amarillo';
+            } else if (isClosedByTime) {
+                finalStatus = 'rojo';
+            }
 
             // 4. Actualizar Interfaz
             updateUI(finalStatus);
@@ -97,10 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (statusBtn) {
-            const phone = '573133531388';
-            const encodedMsg = encodeURIComponent(content.whatsapp);
-            statusBtn.href = `https://wa.me/${phone}?text=${encodedMsg}`;
-            statusBtn.innerText = status === 'rojo' ? 'Apartar cupo para mañana' : 'Hacer Pedido Rápido';
+            statusBtn.href = "index.html#productos";
+            statusBtn.innerText = content.btnText;
         }
     }
 

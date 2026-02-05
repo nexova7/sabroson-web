@@ -16,15 +16,20 @@
                 <img src="assets/images/logo-sabroson.jpg" alt="Sabroson Logo" class="main-logo">
                 <span class="logo-text">SabroSon</span>
             </a>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 0.9rem; font-weight: bold;">Hola, Cliente</span>
-                <a href="index.html" class="nav-link" style="padding: 5px 15px; font-size: 0.8rem;">Salir</a>
-            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="index.html#productos" class="nav-link">Menú</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="#pedido" class="nav-link cart-link"><i class="fas fa-shopping-basket"></i> Mi
+                            Pedido</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
     <section class="section container">
-        <h1 class="text-center mb-2">Tu Espacio Artesanal</h1>
+        <h1 class="text-center mb-2"><span class="section-header">Tu Espacio Artesanal</span></h1>
 
         <div class="products-grid">
             <!-- Status Card -->
@@ -77,13 +82,21 @@
                 </div>
             </div>
         </div>
+
+        <!-- Botón de Cerrar Sesión -->
+        <div class="text-center" style="margin-top: 3rem;">
+            <a href="index.html" class="btn" style="background: #C62828; border: none; padding: 0.8rem 2rem;">Cerrar
+                Sesión</a>
+        </div>
     </section>
 
     <footer>
         <div class="container footer-content"
             style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <div>
-                <h3 style="color: white;">Sabroson 🍞</h3>
+                <a href="index.html">
+                    <h3 style="color: white;">Sabroson 🍞</h3>
+                </a>
                 <p>Hecho con amor en Soacha.</p>
             </div>
             <div style="text-align: right;">

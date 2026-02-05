@@ -8,21 +8,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const drawer = document.getElementById('order-drawer');
     const drawerOverlay = document.getElementById('drawer-overlay');
     const drawerClose = document.getElementById('drawer-close');
-    const cartToggle = document.querySelector('a[href="#pedido"]');
+    const cartToggles = document.querySelectorAll('.cart-link');
 
     function openDrawer(e) {
         if (e) e.preventDefault();
-        drawer.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        updateCartUI();
+        if (drawer) {
+            drawer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateCartUI();
+        }
     }
 
     function closeDrawer() {
-        drawer.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        if (drawer) {
+            drawer.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
     }
 
-    if (cartToggle) cartToggle.addEventListener('click', openDrawer);
+    cartToggles.forEach(btn => btn.addEventListener('click', openDrawer));
     if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
     if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
 
@@ -77,40 +81,87 @@ document.addEventListener('DOMContentLoaded', () => {
         saveCart();
     };
 
-    // --- ADD TO CART (From Menu) ---
+    // --- SEMAPHORE & GOOGLE SHEETS ---
+    const SHEET_ID = '11htctaNcMxrsELB_qTFhvYsAn74x24rp74p-Pr98jkU';
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv`;
+    let currentDayStatus = 'VERDE';
+
+    async function fetchSemaphoreStatus() {
+        try {
+            const now = new Date();
+            const hour = now.getHours();
+
+            // Automation logic
+            let isClosedByTime = hour < 8 || hour >= 17;
+
+            const response = await fetch(CSV_URL);
+            if (!response.ok) throw new Error();
+            const data = await response.text();
+            const rows = data.split('\n');
+            const dataRow = rows[1]?.split(',') || [];
+
+            const sheetStatus = (dataRow[0] || '').trim().toUpperCase();
+
+            // AMARILLO has priority
+            if (sheetStatus === 'AMARILLO') {
+                currentDayStatus = 'AMARILLO';
+            } else if (isClosedByTime) {
+                currentDayStatus = 'ROJO';
+            } else {
+                currentDayStatus = sheetStatus || 'VERDE';
+            }
+
+            updateSemaphoreUI();
+        } catch (e) {
+            console.error("Error fetching status", e);
+        }
+    }
+
+    function updateSemaphoreUI() {
+        const statuses = {
+            'VERDE': { class: 'status-verde', dot: 'dot-verde', text: 'Estamos recibiendo pedidos con todo el cariño artesanal 💚' },
+            'AMARILLO': { class: 'status-amarillo', dot: 'dot-amarillo', text: 'Estamos en los últimos cupos del día 🟡 Te recomendamos confirmar tu pedido pronto.' },
+            'ROJO': { class: 'status-rojo', dot: 'dot-rojo', text: 'Hoy ya completamos nuestros cupos ❤️ Puedes escribirnos para agendar para el próximo día.' }
+        };
+        const config = statuses[currentDayStatus] || statuses['VERDE'];
+
+        const drawerSemaphore = document.getElementById('drawer-semaphore');
+        const drText = document.getElementById('drawer-status-text');
+        if (drawerSemaphore && drText) {
+            drawerSemaphore.className = `semaphore-status ${config.class}`;
+            const dot = drawerSemaphore.querySelector('.status-dot');
+            if (dot) dot.className = `status-dot ${config.dot}`;
+            drText.innerText = config.text;
+        }
+    }
+
+    fetchSemaphoreStatus();
+    setInterval(fetchSemaphoreStatus, 60000);
+
+    // --- PRODUCT CLICK HANDLER (AGREGAR DIRECTO) ---
     document.body.addEventListener('click', (e) => {
-        const btn = e.target.closest('.whatsapp-btn');
+        const btn = e.target.closest('.product-btn');
         if (btn) {
             const productName = btn.getAttribute('data-product');
             const existing = cart.find(item => item.name === productName);
-
             if (existing) {
                 existing.qty += 1;
             } else {
                 cart.push({ name: productName, qty: 1 });
             }
-
             saveCart();
-            openDrawer(); // Abrir el panel automáticamente al agregar
+            openDrawer();
         }
     });
 
-    // --- WHATSAPP ORDER GENERATION ---
+    // --- WHATSAPP ORDER GENERATION (FORMATO EXACTO CON SEMÁFORO) ---
     const sendBtn = document.getElementById('send-cart-whatsapp');
-    const discountInput = document.getElementById('discount-code');
 
     if (sendBtn) {
         sendBtn.onclick = () => {
-            const code = discountInput.value.trim();
-            const itemsList = cart.map(item => `– ${item.name} × ${item.qty}`).join('\n');
-
-            let message = `Hola 😊\nMe gustaría consultar disponibilidad para el siguiente pedido artesanal:\n\n${itemsList}`;
-
-            if (code) {
-                message += `\n\nCódigo de beneficio: ${code}`;
-            }
-
-            message += `\n\nQuedo atento(a) a tiempos de entrega, valor final y forma de pago.\n¡Muchas gracias! 🤍`;
+            if (cart.length === 0) return;
+            const itemsList = cart.map(item => `- ${item.name} (${item.qty})`).join('\n');
+            const message = `Hola 👋💛\nVengo desde la página SabroSon.\n\nEstoy interesada en los siguientes productos:\n${itemsList}\n\nEstado de pedidos hoy: ${currentDayStatus}\n\nQuisiera confirmar disponibilidad y tiempo de entrega.\nGracias 🤎`;
 
             const phone = '573133531388';
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
@@ -128,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5000);
     }
 
-    // --- 3D TILT EFFECT (Restaurado) ---
+    // --- 3D TILT EFFECT (Refinado con "Papel Levantado") ---
     const cards = document.querySelectorAll('.card-3d');
     cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
@@ -138,18 +189,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
-            // Intensidad de 20 grados para un efecto "wow"
-            const rotateX = ((y - centerY) / centerY) * -20;
-            const rotateY = ((x - centerX) / centerX) * 20;
+            // Intensidad elegante
+            const rotateX = ((y - centerY) / centerY) * -15;
+            const rotateY = ((x - centerX) / centerX) * 15;
 
-            card.style.transition = 'transform 0.1s ease-out';
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            card.style.transition = 'transform 0.1s ease-out, box-shadow 0.1s ease-out';
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            card.style.boxShadow = `${-rotateY / 2}px ${rotateX / 2}px 30px rgba(62, 39, 35, 0.25)`;
         });
 
         card.addEventListener('mouseleave', () => {
-            card.style.transition = 'transform 0.6s ease';
+            card.style.transition = 'transform 0.6s ease, box-shadow 0.6s ease';
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            card.style.boxShadow = '0 10px 20px var(--color-shadow)';
         });
+    });
+
+    // --- ACTIVE LINK HIGHLIGHTING ---
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPath || (currentPath === 'index.html' && href === '#')) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
     });
 
     // Mouse Trail - Mini Cupcakes & Donuts
