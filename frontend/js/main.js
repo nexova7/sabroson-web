@@ -1,6 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Sabroson JS Loaded");
 
+    // --- GOOGLE CUSTOMER REVIEWS ---
+    window.renderOptIn = function (data) {
+        if (!data) return; // Si se llama por el onload automático, no hacemos nada sin datos
+        window.gapi.load('surveyoptin', function () {
+            window.gapi.surveyoptin.render({
+                "merchant_id": 5721028152,
+                "order_id": data.orderId,
+                "email": data.email,
+                "delivery_country": "CO",
+                "estimated_delivery_date": data.deliveryDate,
+                "opt_in_style": "CENTER_DIALOG"
+            });
+        });
+    };
+
     // --- CART STATE ---
     let cart = JSON.parse(localStorage.getItem('sabroson_cart')) || [];
 
@@ -177,8 +192,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendBtn = document.getElementById('send-cart-whatsapp');
 
     if (sendBtn) {
-        sendBtn.onclick = () => {
+        sendBtn.onclick = async () => {
             if (cart.length === 0) return;
+
+            // 1. Datos para Google Customer Reviews
+            const orderId = "SAB-" + Date.now();
+            const deliveryDateObj = new Date();
+            deliveryDateObj.setDate(deliveryDateObj.getDate() + 3);
+            const deliveryDate = deliveryDateObj.toISOString().split('T')[0];
+
+            let email = 'cliente@sabroson.com'; // Fallback
+
+            // Priority 1: LocalStorage (from registration form)
+            const savedEmail = localStorage.getItem('sabroson_email');
+            if (savedEmail) {
+                email = savedEmail;
+            }
+            // Priority 2: Supabase Session (if active)
+            else if (window.supabase) {
+                try {
+                    const { data: { session } } = await window.supabase.auth.getSession();
+                    if (session && session.user) {
+                        email = session.user.email;
+                    }
+                } catch (e) {
+                    console.error("Error al obtener sesión de Supabase:", e);
+                }
+            }
+
+            // 2. Activar Google Reviews Opt-in
+            if (window.renderOptIn) {
+                window.renderOptIn({ orderId, email, deliveryDate });
+            }
+
+            // 3. Generar mensaje WhatsApp y abrir
             const itemsList = cart.map(item => `- ${item.name} (${item.qty})`).join('\n');
             const message = `Hola 👋💛\nVengo desde la página SabroSon.\n\nEstoy interesada en los siguientes productos:\n${itemsList}\n\nEstado de pedidos hoy: ${currentDayStatus}\n\nQuisiera confirmar disponibilidad y tiempo de entrega.\nGracias 🤎`;
 
